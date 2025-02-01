@@ -1,0 +1,21 @@
+name: Deploy to WordPress.org
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Deploy to WordPress SVN
+        uses: 10up/action-wordpress-plugin-deploy@v2
+        with:
+          svn_username: ${{ secrets.WP_SVN_USERNAME }}
+          svn_password: ${{ secrets.WP_SVN_PASSWORD }}
+          plugin_slug: weblix
