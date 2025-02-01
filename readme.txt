@@ -12,24 +12,24 @@ Display online users and page views in the last 30 minutes.
 This plugin provides a lightweight and highly efficient solution to track online users on your website without using JavaScript, ensuring no impact on page load speed. It offers detailed analytics similar to Google Analytics, including real-time user activity, session counts, and page views. Designed for simplicity and performance, it integrates seamlessly with WordPress and provides accurate statistics directly in the admin dashboard. Ideal for site owners who prioritize speed and functionality.
 
 ### 🌟 Most powerful features
-&#9989; **Real-time statistics** – Instantly track user activity on your website.
-&#9989; **Live online user count** – View the number of active users in the last 30 minutes.
-&#9989; **Active page tracking** – See which pages are currently being visited.
-&#9989; **Pageview count per page** – Monitor the number of visits for each page.
-&#9989; **Device-based user segmentation** – Identify the number of active users based on their device type.
-&#9989; **Bot detection and filtering** – Excludes bots from analytics to provide accurate user data.
-&#9989; **Beautiful dashboard widget** – A sleek and intuitive widget for WordPress admin.
-&#9989; **Auto-refreshing live stats** – Updates online user count every 30 seconds.
+✅ **Real-time statistics** – Instantly track user activity on your website.
+✅ **Live online user count** – View the number of active users in the last 30 minutes.
+✅ **Active page tracking** – See which pages are currently being visited.
+✅ **Pageview count per page** – Monitor the number of visits for each page.
+✅ **Device-based user segmentation** – Identify the number of active users based on their device type.
+✅ **Bot detection and filtering** – Excludes bots from analytics to provide accurate user data.
+✅ **Beautiful dashboard widget** – A sleek and intuitive widget for WordPress admin.
+✅ **Auto-refreshing live stats** – Updates online user count every 30 seconds.
 
 
 ### 🚀 Key Features
-&#9989; **Google Analytics-like statistics** – Provides detailed insights similar to Google Analytics.
-&#9989; **No heavy JavaScript** – Tracks user activity without relying on Google Analytics scripts.
-&#9989; **Instant tracking** – Users are counted immediately upon visiting the site.
-&#9989; **No external JavaScript loading** – Ensures optimal performance with zero external script dependencies.
-&#9989; **Faster page load speed** – Eliminates heavy Google Analytics scripts to improve site performance.
-&#9989; **Ideal for high-traffic websites** – Optimized for large-scale sites that require real-time analytics.
-&#9989; **SEO-friendly solution** – Since Google Search Console now shows stats with a 2-3 hour delay, this plugin is a perfect alternative for sites that prioritize SEO and page speed.
+✅ **Google Analytics-like statistics** – Provides detailed insights similar to Google Analytics.
+✅ **No heavy JavaScript** – Tracks user activity without relying on Google Analytics scripts.
+✅ **Instant tracking** – Users are counted immediately upon visiting the site.
+✅ **No external JavaScript loading** – Ensures optimal performance with zero external script dependencies.
+✅ **Faster page load speed** – Eliminates heavy Google Analytics scripts to improve site performance.
+✅ **Ideal for high-traffic websites** – Optimized for large-scale sites that require real-time analytics.
+✅ **SEO-friendly solution** – Since Google Search Console now shows stats with a 2-3 hour delay, this plugin is a perfect alternative for sites that prioritize SEO and page speed.
 
 == Installation ==
 
