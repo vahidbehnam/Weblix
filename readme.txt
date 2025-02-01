@@ -1,7 +1,7 @@
 # Weblix - WordPress Plugin  
 
 🚀 Weblix plugin is now available on WordPress!  
-[View on WordPress Plugin Directory](https://wordpress.org/plugins/weblix/)
+🔗 [View on WordPress Plugin Directory](https://wordpress.org/plugins/weblix/)
 
 === Weblix - Online Users ===
 Contributors: vahidbehnam
