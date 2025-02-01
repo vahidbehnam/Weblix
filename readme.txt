@@ -1,3 +1,8 @@
+# Weblix - WordPress Plugin  
+
+🚀 Weblix plugin is now available on WordPress!  
+🔗 [View on WordPress Plugin Directory](https://wordpress.org/plugins/weblix/)  
+
 === Weblix - Online Users ===
 Contributors: vahidbehnam
 Tags: google analytics, insights, stats, site visitors, Online Users
