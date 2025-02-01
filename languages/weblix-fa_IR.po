@@ -1,0 +1,91 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2025-01-27 23:50+0330\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: fa_IR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.5\n"
+"X-Poedit-Basepath: .\n"
+
+msgid "Weblix - Online Users"
+msgstr "وبلیکس - کاربران آنلاین"
+
+msgid "Vahid Behnam"
+msgstr "وحید بهنام"
+
+msgid "Online Users"
+msgstr "کاربران آنلاین"
+
+msgid "Total Views:"
+msgstr "تعداد بازدیدها :"
+
+msgid "DESKTOP:"
+msgstr "دسکتاپ:"
+
+msgid "MOBILE:"
+msgstr "موبایل:"
+
+msgid "TABLET:"
+msgstr "تبلت:"
+
+msgid "Most Visited Pages"
+msgstr "بیشترین صفحات بازدید شده"
+
+msgid "Views"
+msgstr "بازدید"
+
+msgid "Page URL"
+msgstr "آدرس صفحه"
+
+msgid "No data available"
+msgstr "اطلاعاتی موجود نیست"
+
+msgid "Online Users and Page Views"
+msgstr "کاربران آنلاین و بازدید صفحات"
+
+msgid "Unique Visitors (Last 30 Minutes)"
+msgstr "بازدیدکنندگان یکتا (30 دقیقه گذشته)"
+
+msgid "Unique Visitors"
+msgstr "بازدیدکنندگان یکتا"
+
+msgid "Unique Bot Visitors"
+msgstr "بازدیدکنندگان یکتای ربات"
+
+msgid "Total Page Views (Last 30 Minutes)"
+msgstr "مجموع بازدید صفحات (30 دقیقه گذشته)"
+
+msgid "Total Views"
+msgstr "کل بازدیدها"
+
+msgid "Total Bot Views"
+msgstr "کل بازدیدهای ربات"
+
+msgid "Number of Users by Device Type (Last 30 Minutes)"
+msgstr "تعداد کاربران براساس نوع دستگاه (30 دقیقه گذشته)"
+
+msgid "Device Type"
+msgstr "نوع دستگاه"
+
+msgid "Number of Users"
+msgstr "تعداد کاربران"
+
+msgid "Page Views (Last 30 Minutes)"
+msgstr "بازدید صفحات (30 دقیقه گذشته)"
+
+msgid "No users recorded."
+msgstr "هیچ کاربری ثبت نشده است."
+
+msgid "No views recorded."
+msgstr "هیچ بازدیدی ثبت نشده است."
+
+msgid "Weblix - Online Users (Last 30 Minutes)"
+msgstr "وبلیکس - کاربران آنلاین (30 دقیقه گذشته)"
+
+msgid "Display online users and page views in the last 30 minutes."
+msgstr "نمایش کاربران آنلاین و بازدید صفحات در ۳۰ دقیقه گذشته."
