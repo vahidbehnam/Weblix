@@ -45,6 +45,6 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     }
 
-    setInterval(refreshWidget, 30000); // Refresh every 30 seconds
+    setInterval(refreshWidget, 15000); // Refresh every 15 seconds
     refreshWidget(); // Initial execution
 });

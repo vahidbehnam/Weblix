@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2025-01-27 23:50+0330\n"
+"PO-Revision-Date: 2025-02-04 20:19+0330\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fa_IR\n"
@@ -89,3 +89,12 @@ msgstr "وبلیکس - کاربران آنلاین (30 دقیقه گذشته)"
 
 msgid "Display online users and page views in the last 30 minutes."
 msgstr "نمایش کاربران آنلاین و بازدید صفحات در ۳۰ دقیقه گذشته."
+
+msgid "Bot Visitors"
+msgstr "بازدیدکنندگان ربات"
+
+msgid "Unique Views"
+msgstr "بازدیدهای یکتا"
+
+msgid "Bot Views"
+msgstr "بازدیدهای ربات"

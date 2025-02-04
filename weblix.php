@@ -1,9 +1,11 @@
 <?php
 /**
  * Plugin Name: Weblix - Online Users
+ * Plugin URI: https://github.com/vahidbehnam/Weblix
  * Description: Display online users and page views in the last 30 minutes.
- * Version: 1.3
+ * Version: 1.4
  * Author: Vahid Behnam
+ * Author URI: https://github.com/vahidbehnam
  * Text Domain: weblix
  * Domain Path: /languages
  * Requires at least: 5.3
@@ -75,39 +77,55 @@ function weblix_get_device_type() {
 }
 
 
-function weblix_track_page_view() {
+// Register REST API route for tracking page views
+function weblix_register_rest_routes() {
+    register_rest_route('weblix/v1', '/track', [
+        'methods'  => 'POST',
+        'callback' => 'weblix_track_page_view',
+        'permission_callback' => function () {
+            return true; // Add security checks here (e.g., nonce verification)
+        }
+    ]);
+}
+add_action('rest_api_init', 'weblix_register_rest_routes');
+
+// Function to process REST API request
+function weblix_track_page_view(WP_REST_Request $request) {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weblix';
+
+    // Prevent request caching
+    nocache_headers();
+
+    // Retrieve request data
     $user_ip = '';
     if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
-    $user_ip = trim(explode(',', sanitize_text_field(wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR'])))[0]);
+        $user_ip = trim(explode(',', sanitize_text_field(wp_unslash($_SERVER['HTTP_X_FORWARDED_FOR'])))[0]);
     } elseif (!empty($_SERVER['HTTP_CLIENT_IP'])) {
-    $user_ip = sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
+        $user_ip = sanitize_text_field(wp_unslash($_SERVER['HTTP_CLIENT_IP']));
     } elseif (!empty($_SERVER['REMOTE_ADDR'])) {
-    $user_ip = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
+        $user_ip = sanitize_text_field(wp_unslash($_SERVER['REMOTE_ADDR']));
     }
     $user_ip = sanitize_text_field($user_ip);
-    $page_url = isset($_POST['page_url']) ? esc_url_raw(wp_unslash($_POST['page_url'])) : '';
-    $page_title = isset($_POST['page_title']) ? sanitize_text_field(wp_unslash($_POST['page_title'])) : 'Untitled Page';
+
+    // Retrieve page parameters
+    $page_url = $request->get_param('page_url') ?: '';
+    $page_title = $request->get_param('page_title') ?: 'Untitled Page';
     $visit_time = current_time('mysql', 1);
     $device_type = weblix_get_device_type();
     $user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? sanitize_text_field(wp_unslash($_SERVER['HTTP_USER_AGENT'])) : '';
     $bot_keywords = 'bot|crawl|slurp|spider|mediapartners|google|bing|yahoo|duckduck|baidu|yandex|facebot|ia_archiver|mj12bot|semrush|ahrefs|dotbot|moobot';
     $is_bot = preg_match("/$bot_keywords/i", $user_agent) ? 1 : 0;
-    
-    if (!isset($_POST['nonce'])) {
-        wp_send_json_error('Nonce is missing.');
+
+    // Nonce verification for security
+    $nonce = $request->get_param('nonce');
+    if (!$nonce || !wp_verify_nonce($nonce, 'wp_rest')) {
+        return new WP_REST_Response('Invalid nonce.', 403);
     }
 
-    $nonce = sanitize_text_field(wp_unslash($_POST['nonce']));
-
-    if (!wp_verify_nonce($nonce, 'weblix_track_page_view_nonce')) {
-        wp_send_json_error('Invalid nonce.');
-    }
-
-    // Check for previous visits within a 30-minute window
+    // Check for previous visit within the last 30 minutes
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery
-    $existing_visit = $wpdb->get_var(
+	$existing_visit = $wpdb->get_var(
         $wpdb->prepare(
             "SELECT COUNT(*) FROM {$wpdb->prefix}weblix WHERE user_ip = %s AND page_url = %s AND visit_time >= %s",
             $user_ip, $page_url, gmdate('Y-m-d H:i:s', strtotime('-30 minutes', strtotime($visit_time)))
@@ -115,8 +133,9 @@ function weblix_track_page_view() {
     );
 
     if ($existing_visit == 0) {
-		// phpcs:ignore WordPress.DB.DirectDatabaseQuery
-        $wpdb->insert(
+        // Insert new page view record
+        // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+		$wpdb->insert(
             $table_name,
             array(
                 'user_ip'    => sanitize_text_field($user_ip),
@@ -137,49 +156,26 @@ function weblix_track_page_view() {
         );
     }
 
-    wp_send_json_success('Page view tracked.');
+    return new WP_REST_Response('Page view tracked successfully.', 200);
 }
 
-add_action('wp_ajax_track_page_view', 'weblix_track_page_view');
-add_action('wp_ajax_nopriv_track_page_view', 'weblix_track_page_view');
-
+// Enqueue JavaScript script
 function weblix_enqueue_scripts() {
-    // Enqueue the script with jQuery as a dependency
     wp_enqueue_script(
         'weblix-ajax',
         plugin_dir_url(__FILE__) . 'assets/js/weblix-tracker.js',
         ['jquery'],
-        '1.0',
-        true
+        time(),
+        false
     );
 
-    // Localize the script with additional data
+    // Send necessary data to JavaScript
     wp_localize_script('weblix-ajax', 'weblix_ajax', [
-        'ajax_url' => admin_url('admin-ajax.php'),
-        'nonce'    => wp_create_nonce('weblix_track_page_view_nonce'),
+        'rest_url' => rest_url('weblix/v1/track'),
+        'nonce'    => wp_create_nonce('wp_rest')
     ]);
 }
-add_action('wp_enqueue_scripts', 'weblix_enqueue_scripts');
-
-// Handle AJAX requests for logged-in and non-logged-in users
-add_action('wp_ajax_weblix_handle_ajax', 'weblix_handle_ajax');
-add_action('wp_ajax_nopriv_weblix_handle_ajax', 'weblix_handle_ajax');
-
-function weblix_handle_ajax() {
-    // Prevent caching of AJAX responses
-    header("Cache-Control: no-cache, must-revalidate, max-age=0");
-    header("Expires: Wed, 11 Jan 1984 05:00:00 GMT");
-    header("Pragma: no-cache");
-
-    // Process the AJAX request
-    $response = [
-        'status'  => 'success',
-        'message' => 'AJAX response successfully handled',
-    ];
-
-    // Send JSON response
-    wp_send_json_success($response);
-}
+add_action('wp_enqueue_scripts', 'weblix_enqueue_scripts', 999);
 
 function weblix_add_dashboard_page() {
     add_menu_page(
@@ -229,15 +225,14 @@ function weblix_display_dashboard() {
              FROM " . esc_sql($table_name) . " 
              WHERE visit_time >= %s 
              GROUP BY page_url, page_title 
-             ORDER BY total_views DESC 
-             LIMIT 100", 
+             ORDER BY total_views DESC", 
             $time_limit
         )
     );
 
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
     $total_views = $wpdb->get_var(
-        $wpdb->prepare("SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE visit_time >= %s", $time_limit)
+        $wpdb->prepare("SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE visit_time >= %s AND is_bot = 0", $time_limit)
     );
 
 	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
@@ -258,12 +253,12 @@ function weblix_display_dashboard() {
     ?>
     <div class="wrap">
 <h1><?php esc_html_e('Online Users and Page Views', 'weblix'); ?></h1>
-<h2><?php esc_html_e('Unique Visitors (Last 30 Minutes)', 'weblix'); ?></h2>
+<h2><?php esc_html_e('Total Page (Last 30 Minutes)', 'weblix'); ?></h2>
 <table class="wp-list-table widefat fixed striped table-view-list">
     <thead>
         <tr>
             <th><?php esc_html_e('Unique Visitors', 'weblix'); ?></th>
-            <th><?php esc_html_e('Unique Bot Visitors', 'weblix'); ?></th>
+            <th><?php esc_html_e('Bot Visitors', 'weblix'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -278,8 +273,8 @@ function weblix_display_dashboard() {
 <table class="wp-list-table widefat fixed striped table-view-list">
     <thead>
         <tr>
-            <th><?php esc_html_e('Total Views', 'weblix'); ?></th>
-            <th><?php esc_html_e('Total Bot Views', 'weblix'); ?></th>
+            <th><?php esc_html_e('Unique Views', 'weblix'); ?></th>
+            <th><?php esc_html_e('Bot Views', 'weblix'); ?></th>
         </tr>
     </thead>
     <tbody>
@@ -371,8 +366,8 @@ echo '<div id="weblix-dashboard">
         <table id="weblix-pages-table" class="wp-list-table widefat fixed striped table-view-list">
             <thead>
                 <tr>
-                    <th width="12%">' . esc_html__('Views', 'weblix') . '</th>
-                    <th width="86%">' . esc_html__('Page URL', 'weblix') . '</th>
+                    <th width="13%">' . esc_html__('Views', 'weblix') . '</th>
+                    <th width="85%">' . esc_html__('Page URL', 'weblix') . '</th>
                 </tr>
             </thead>
             <tbody>
@@ -413,7 +408,7 @@ function weblix_get_dashboard_data() {
     // Total Views
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery
     $total_views = $wpdb->get_var(
-        $wpdb->prepare("SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE visit_time >= %s", $time_limit)
+        $wpdb->prepare("SELECT COUNT(*) FROM " . esc_sql($table_name) . " WHERE visit_time >= %s AND is_bot = 0", $time_limit)
     );
 
     // Users by Device Type
@@ -436,7 +431,7 @@ function weblix_get_dashboard_data() {
         $wpdb->prepare(
             "SELECT page_url, page_title, COUNT(*) AS total_views 
              FROM " . esc_sql($table_name) . " 
-             WHERE visit_time >= %s 
+             WHERE visit_time >= %s AND is_bot = 0
              GROUP BY page_url, page_title 
              ORDER BY total_views DESC 
              LIMIT 100", 
@@ -474,28 +469,34 @@ function weblix_enqueue_dashboard_scripts() {
 }
 add_action('admin_enqueue_scripts', 'weblix_enqueue_dashboard_scripts');
 
-// Function to delete old records (older than 7 days)
+// Delete records older than 30 minutes, considering the time zone difference
 function weblix_delete_old_visitors() {
     global $wpdb;
     $table_name = $wpdb->prefix . 'weblix';
-    $current_time = current_time('mysql');
 
-    // Delete records where the visit time is older than 7 days
-    // phpcs:ignore WordPress.DB.DirectDatabaseQuery
+    // Get WordPress local time and convert it to UTC
+    $local_time = current_time('timestamp'); // Local time based on WordPress settings
+    $utc_time = $local_time - get_option('gmt_offset') * HOUR_IN_SECONDS; // Convert to UTC
+
+    // Convert time to DATETIME format for comparison with visit_time
+    $formatted_time = date('Y-m-d H:i:s', $utc_time - (30 * 60)); // 30 minutes ago
+
+    // Delete records older than 30 minutes in UTC
     $wpdb->query($wpdb->prepare(
-        "DELETE FROM " . esc_sql($table_name) . " WHERE visit_time < DATE_SUB(%s, INTERVAL 7 DAY)",
-        $current_time
+        "DELETE FROM $table_name WHERE visit_time < %s",
+        $formatted_time
     ));
 }
 
-// Schedule a daily cron job for cleanup
-function weblix_schedule_daily_cleanup() {
-    // Check if the daily cleanup job is already scheduled
+// Schedule a cron job to run every week
+function weblix_schedule_weekly_cleanup() {
     if (!wp_next_scheduled('weblix_cleanup_old_visitors')) {
-        wp_schedule_event(time(), 'daily', 'weblix_cleanup_old_visitors');
+        wp_schedule_event(time(), 'weekly', 'weblix_cleanup_old_visitors');
     }
 }
-add_action('wp', 'weblix_schedule_daily_cleanup');
+add_action('init', 'weblix_schedule_weekly_cleanup');
 
 // Hook the cleanup function to the scheduled event
 add_action('weblix_cleanup_old_visitors', 'weblix_delete_old_visitors');
+
+

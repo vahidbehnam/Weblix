@@ -1,35 +1,42 @@
 === Weblix - Online Users ===
 Contributors: vahidbehnam
-Tags: google analytics, insights, stats, site visitors, Online Users
+Tags: google analytics, insights, stats, page views, Online Users
 Tested up to: 6.7
-Stable tag: 1.3
+Stable tag: 1.4
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
 Display online users and page views in the last 30 minutes.
 
 == Description ==
-This plugin provides a lightweight and highly efficient solution to track online users on your website without using JavaScript, ensuring no impact on page load speed. It offers detailed analytics similar to Google Analytics, including real-time user activity, session counts, and page views. Designed for simplicity and performance, it integrates seamlessly with WordPress and provides accurate statistics directly in the admin dashboard. Ideal for site owners who prioritize speed and functionality.
 
-### 🌟 Most powerful features
-&#9989; **Real-time statistics** – Instantly track user activity on your website.
-&#9989; **Live online user count** – View the number of active users in the last 30 minutes.
-&#9989; **Active page tracking** – See which pages are currently being visited.
-&#9989; **Pageview count per page** – Monitor the number of visits for each page.
-&#9989; **Device-based user segmentation** – Identify the number of active users based on their device type.
-&#9989; **Bot detection and filtering** – Excludes bots from analytics to provide accurate user data.
-&#9989; **Beautiful dashboard widget** – A sleek and intuitive widget for WordPress admin.
-&#9989; **Auto-refreshing live stats** – Updates online user count every 30 seconds.
+### 🚀 The Ultimate Google Analytics Alternative – 100% Lightweight & Real-Time!
 
+Tired of slow page speeds and complex analytics? Weblix is the perfect replacement for Google Analytics, offering real-time tracking without slowing down your website. Get instant insights into your visitors, live user count, page views, and more—all without the bloat of external scripts.
 
-### 🚀 Key Features
-&#9989; **Google Analytics-like statistics** – Provides detailed insights similar to Google Analytics.
-&#9989; **No heavy JavaScript** – Tracks user activity without relying on Google Analytics scripts.
-&#9989; **Instant tracking** – Users are counted immediately upon visiting the site.
-&#9989; **No external JavaScript loading** – Ensures optimal performance with zero external script dependencies.
-&#9989; **Faster page load speed** – Eliminates heavy Google Analytics scripts to improve site performance.
-&#9989; **Ideal for high-traffic websites** – Optimized for large-scale sites that require real-time analytics.
-&#9989; **SEO-friendly solution** – Since Google Search Console now shows stats with a 2-3 hour delay, this plugin is a perfect alternative for sites that prioritize SEO and page speed.
+### 🔹 Why Weblix?
+
+Unlike Google Analytics, which relies on heavy tracking scripts and delayed data updates, Weblix delivers instant, accurate, and privacy-friendly analytics directly within WordPress. Whether you run a blog, e-commerce store, or high-traffic site, Weblix keeps your stats live and your site lightning-fast!
+
+### 🌟 Powerful Features
+
+✅ Instant Real-Time Stats – See who's online right now!
+✅ Live Online User Count – Track active users in the last 30 minutes.
+✅ Pageview Tracking – Monitor which pages are getting the most attention.
+✅ Device & Location Insights – Understand your audience better.
+✅ Bot Detection & Filtering – Get clean, accurate visitor data.
+✅ Lightweight & No Tracking Scripts – Zero impact on performance.
+✅ Fully SEO-Friendly – No third-party scripts that slow down your site.
+
+### 🚀 Why Choose Weblix Over Google Analytics?
+
+🔹 No External Scripts – Unlike Google Analytics, Weblix doesn’t slow down your site.
+🔹 Instant Tracking – Google Analytics has delays; Weblix updates stats in real-time.
+🔹 Privacy-Focused – No data sharing with third parties.
+🔹 Perfect for SEO – Faster page speeds mean better rankings.
+🔹 Ideal for Any Website – Whether it's a blog, shop, or membership site, Weblix works perfectly.
+
+### 🔥 Ditch Google Analytics & Take Control of Your Data Today!
 
 == Installation ==
 
@@ -47,14 +54,48 @@ Manual Installation:
 	2. Upload `weblix` extracted folder to the `/wp-content/plugins/` directory
 	3. Activate the plugin through the 'Plugins' menu in WordPress
 	
-You're done! The Plugin ready to use, for more please check the plugin description.
+You're done! The plugin is ready to use. For more details, check the plugin description.
+
+== Frequently Asked Questions ==
+
+= How does Weblix track online users? =
+Weblix uses a lightweight tracking system without JavaScript to monitor active users in real-time. It updates user activity every 30 seconds.
+
+= Does Weblix slow down my website? =
+No! Weblix is designed to be lightweight and does not use any external scripts, ensuring optimal performance.
+
+= Is this plugin compatible with caching plugins? =
+Yes! Weblix works well with most caching plugins and can accurately track online users.
+
+= Can I see historical data with Weblix? =
+Weblix focuses on real-time tracking and does not store long-term analytics data. It provides online user count and page views from the last 30 minutes.
+
+= Does Weblix respect user privacy? =
+Yes! Weblix does not collect or store personal data, making it fully compliant with privacy laws such as GDPR.
+
+= Will Weblix affect my website’s speed? =
+Absolutely not. Unlike Google Analytics, Weblix runs entirely within WordPress without external tracking scripts, ensuring zero impact on load times.
+
+= Is Weblix suitable for high-traffic websites? =
+Yes! Weblix is optimized for performance and can handle real-time tracking efficiently even on busy websites.
+
+= Can I customize Weblix to track specific metrics? =
+Currently, Weblix focuses on real-time tracking of online users and page views. Future updates may include more customization options.
+
+= How do I uninstall Weblix? =
+Simply go to Plugins > Installed Plugins, find Weblix, and click Deactivate followed by Delete. No extra steps are required.
 
 == Screenshots ==
 
-1. Real-time display of online users in the last 30 minutes in the WordPress dashboard.  
+1. Real-time display of online users in the last 30 minutes in the WordPress dashboard.
 2. Detailed report of online users in the last 30 minutes. 
 
 == Changelog ==
+
+= 1.4 =
+* Improved user identification method for more accurate online user tracking.
+* Enhanced cron job scheduling for better performance and efficiency.
+
 = 1.3 =
 * Improved resource usage efficiency.
 * Added compatibility with caching plugins.
@@ -76,8 +117,12 @@ You're done! The Plugin ready to use, for more please check the plugin descripti
 * Initial release.
 
 == Upgrade Notice ==
+= 1.4 =
+This update introduces an improved user identification method, making online user tracking more accurate than ever. Cron job scheduling has also been optimized for better performance. Updating is highly recommended.
+
+
 = 1.3 =
-Includes better resource optimization, caching compatibility, and improved tracking accuracy. Update recommended.
+Includes better resource optimization, caching compatibility, and improved tracking accuracy. Updating is recommended.
 
 = 1.2 =
 This update includes significant optimizations for resource usage, better bot detection, and improved title handling. Update is highly recommended for enhanced accuracy and performance.
