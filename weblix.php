@@ -3,7 +3,7 @@
  * Plugin Name: Weblix - Online Users
  * Plugin URI: https://github.com/vahidbehnam/Weblix
  * Description: Display online users and page views in the last 30 minutes.
- * Version: 1.4
+ * Version: 1.4.1
  * Author: Vahid Behnam
  * Author URI: https://github.com/vahidbehnam
  * Text Domain: weblix
@@ -119,9 +119,16 @@ function weblix_track_page_view(WP_REST_Request $request) {
 
     // Nonce verification for security
     $nonce = $request->get_param('nonce');
-    if (!$nonce || !wp_verify_nonce($nonce, 'wp_rest')) {
-        return new WP_REST_Response('Invalid nonce.', 403);
-    }
+
+	// If the user is an admin, they don't need a nonce and will be counted directly
+	if (current_user_can('manage_options')) {
+		$nonce = true;
+	}
+
+	// If no nonce is provided, reject the request
+	if (!$nonce) {
+		return new WP_REST_Response('Unauthorized.', 403);
+	}
 
     // Check for previous visit within the last 30 minutes
     // phpcs:ignore WordPress.DB.DirectDatabaseQuery

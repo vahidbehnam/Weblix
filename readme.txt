@@ -2,7 +2,7 @@
 Contributors: vahidbehnam
 Tags: google analytics, insights, stats, page views, Online Users
 Tested up to: 6.7
-Stable tag: 1.4
+Stable tag: 1.4.1
 License: GPL-2.0+
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -92,6 +92,10 @@ Simply go to Plugins > Installed Plugins, find Weblix, and click Deactivate foll
 
 == Changelog ==
 
+= 1.4.1 =  
+* **Fix**: Resolved nonce validation conflicts for logged-in users.  
+* **Optimization**: Improved REST API request handling for smoother tracking. 
+
 = 1.4 =
 * Improved user identification method for more accurate online user tracking.
 * Enhanced cron job scheduling for better performance and efficiency.
@@ -117,6 +121,13 @@ Simply go to Plugins > Installed Plugins, find Weblix, and click Deactivate foll
 * Initial release.
 
 == Upgrade Notice ==
+
+= 1.4.1 =  
+**Maintenance update**:  
+- Fixes minor authentication issues for logged-in users.  
+- Optimizes API performance.  
+Recommended for improved stability.  
+
 = 1.4 =
 This update introduces an improved user identification method, making online user tracking more accurate than ever. Cron job scheduling has also been optimized for better performance. Updating is highly recommended.
 
